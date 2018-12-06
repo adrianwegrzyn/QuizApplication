@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import {ListView, Button, Platform, StyleSheet, Text, View} from 'react-native';
+import {ListView, TouchableOpacity, Button, Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
 import { Question} from "./Question";
 import {Navigation} from "react-native-navigation";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 
 export default class Tests extends Component{
@@ -18,6 +19,11 @@ export default class Tests extends Component{
         this.score = 0;
     }
 
+
+    saveData = () => {
+        let score = this.score;
+        AsyncStorage.setItem('score', score);
+};
     _onRefresh = () => {
         this.setState({refreshing: true});
         // this.fetchData().then(() => {
@@ -31,15 +37,49 @@ export default class Tests extends Component{
 
     next = () => {
         if(this.testLength === this.currentQuestion){
+            this.sendResult();
+            this.saveData();
             Navigation.push('MAIN_STACK',{
+
                 component: {
-                    name: 'Results'
+                    name: 'ResultTest',
+                    passProps: {
+                        text: this.score
+                    },
                 }
             })
         }else{
             this.score++;
             this._onRefresh();
         }
+
+    };
+
+    goToDrawer = () => {
+        Navigation.mergeOptions('drawerId', {
+            sideMenu:{
+                left:{
+                    visible:true
+                }
+            }
+        })
+    };
+
+    sendResult = () => {
+        fetch('https://pwsz-quiz-api.herokuapp.com/api/result', {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                nick: "Jasio",
+                score: 5,
+                total: 20,
+                type: "historia",
+                date: "2018-12-01"
+            })
+        });
 
     };
 
@@ -118,17 +158,40 @@ export default class Tests extends Component{
 
 
 
+
+
     return (
       <View style={styles.container}>
-          <View>
-              <Text>Pytanie {this.currentQuestion + 1} z {test1.length}</Text>
-              <Text style={{color:'black'}}>{test1[this.currentQuestion].question}</Text>
-              <Button title={test1[this.currentQuestion].answer_A} onPress={() => this.next()}/>
-              <Button title={test1[this.currentQuestion].answer_B} onPress={() => this.next()}/>
-              <Button title={test1[this.currentQuestion].answer_C} onPress={() => this.next()}/>
-              <Button title={test1[this.currentQuestion].answer_D} onPress={() => this.next()}/>
+          <View style={styles.toolbar}>
+              <Icon.Button style={{flex:1, margin: 5}} name="bars" backgroundColor="#46597a" color="black" size={30} onPress={this.goToDrawer}/>
+              <Text style={{flex:1, marginLeft: 50, fontSize:25}}>Test</Text>
           </View>
-
+          <View style={{alignItems: 'center', textAlign: 'center', padding: 10, flex:1}}>
+              <Text style={{alignItems: 'center'}}>Pytanie {this.currentQuestion + 1} z {test1.length}</Text>
+              <Text style={{color:'black', fontSize: 20,}}>{test1[this.currentQuestion].question}</Text>
+          </View>
+          <View style={styles.questions}>
+              <TouchableOpacity style={styles.button} onPress={() => this.next()}>
+                  <Text>
+                      {test1[this.currentQuestion].answer_A}
+                  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => this.next()}>
+                  <Text>
+                      {test1[this.currentQuestion].answer_B}
+                  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => this.next()}>
+                  <Text>
+                      {test1[this.currentQuestion].answer_C}
+                  </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => this.next()}>
+                  <Text>
+                      {test1[this.currentQuestion].answer_D}
+                  </Text>
+              </TouchableOpacity>
+          </View>
       </View>
     );
   }
@@ -141,8 +204,33 @@ export default class Tests extends Component{
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
+    toolbar: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#46597a',
+        justifyContent: 'center',
+        height: 60,
+    },
+    questions: {
+        margin: 10,
+        borderColor: 'black',
+        borderWidth: 3,
+        alignItems: 'center',
+        flex:2
+    },
+    button: {
+        flex:1,
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        borderColor: '#71BBD0',
+        borderWidth: 1,
+        padding: 30,
+        margin: 10,
+        backgroundColor: '#71BBD0',
+        borderRadius:5
+
+    },
+
 });

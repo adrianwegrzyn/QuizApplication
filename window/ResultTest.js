@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {Button, Platform, StyleSheet, Text, View} from 'react-native';
+import {Button, Platform, StyleSheet, Text, View, AsyncStorage} from 'react-native';
+
+export default class ResultTest extends Component{
 
 
-class ResultTest extends Component{
     render() {
         return (
             <View style={styles.container}>
-                <Text>Twój wynik</Text>
-                <Text></Text>
-            </View>
+                <Text style={styles.welcome}>Twój wynik</Text>
+                <Text style={styles.instructions}>{this.props.text}</Text>
+</View>
         );
     }
 }
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#F5FCFF',
     },
     welcome: {
-        fontSize: 20,
+        fontSize: 30,
         textAlign: 'center',
         margin: 10,
     },
@@ -29,5 +30,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#333333',
         marginBottom: 5,
+        fontSize: 18
     },
 });

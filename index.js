@@ -3,13 +3,16 @@ import App from './App';
 import Results from './window/Results';
 import Tests from './window/Tests';
 import Drawer from './window/Drawer';
-import { Dimensions } from 'react-native'
+import ResultTest from './window/ResultTest';
+import { Dimensions, React } from 'react-native'
 
+var SQLite = require('react-native-sqlite-storage')
 
 Navigation.registerComponent('App', () => App);
 Navigation.registerComponent('Results', () => Results);
 Navigation.registerComponent('Tests', () => Tests);
 Navigation.registerComponent('Drawer', () => Drawer);
+Navigation.registerComponent('ResultTest', () => ResultTest);
 
 
 const { width } = Dimensions.get('window');
@@ -20,15 +23,10 @@ Navigation.events().registerAppLaunchedListener(() => {
         },
         topBar: {
             elevation: 0,
-            //visible: false,
+            visible: false,
             drawBehind: true,
             animate: false,
             buttonColor: 'white',
-            title: {
-                color: 'white',
-                alignment: 'center',
-                text: 'Quiz'
-            },
             background: {
                 color: 'transparent'
             }

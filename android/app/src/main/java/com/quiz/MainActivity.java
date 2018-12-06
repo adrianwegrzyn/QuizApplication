@@ -1,10 +1,10 @@
 package com.quiz;
 
-import android.os.Bundle;
+        import android.os.Bundle;
 
-import com.reactnativenavigation.NavigationActivity;
+        import com.reactnativenavigation.NavigationActivity;
 
-import org.devio.rn.splashscreen.SplashScreen;
+        import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends NavigationActivity {
     @Override

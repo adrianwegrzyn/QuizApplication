@@ -11,6 +11,7 @@ import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
 import com.reactnativenavigation.react.NavigationReactNativeHost;
 import com.reactnativenavigation.react.ReactGateway;
+import org.pgsqlite.SQLitePluginPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,8 @@ public class MainApplication extends NavigationApplication {
         return Arrays.<ReactPackage>asList(
                 new MainReactPackage(),
             new VectorIconsPackage(),
-                new SplashScreenReactPackage()
+                new SplashScreenReactPackage(),
+                new SQLitePluginPackage()   // register SQLite Plugin here
         );
     }
 
