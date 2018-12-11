@@ -32,6 +32,24 @@ export default class Drawer extends Component{
         })
     };
 
+    newScreen2 = (screen, id) => {
+        Navigation.mergeOptions('drawerId', {
+            sideMenu: {
+                left: {
+                    visible: false
+                }
+            }
+        });
+        Navigation.push('MAIN_STACK',{
+            component: {
+                name: screen,
+                passProps: {
+                    text: id
+                },
+            }
+        })
+    };
+
     downloadDataFromDatabase = (db) => {
         db.transaction((tx) => {
             tx.executeSql('SELECT * FROM main.descriptionTest;', [], (tx, results) => {
@@ -50,7 +68,7 @@ export default class Drawer extends Component{
       for(let i = 0; i < this.state.tests.length; i++) {
           rows.push(
               <View key={i} style={styles.view}>
-                  <TouchableOpacity style={styles.button}  key={i} onPress={() => this.newScreen('Tests', this.state.tests[i].id)}>
+                  <TouchableOpacity style={styles.button}  key={i} onPress={() => this.newScreen2('Tests', this.state.tests[i].id)}>
                       <Text style={styles.buttonText}>{this.state.tests[i].name}</Text>
                   </TouchableOpacity>
               </View>

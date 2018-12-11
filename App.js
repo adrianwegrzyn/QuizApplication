@@ -26,7 +26,7 @@ export default class App extends Component {
 
 
     async componentDidMount() {
-        this._selectDataFromTable()
+        // this._selectDataFromTable()
         SplashScreen.hide();
         try {
             const value = await AsyncStorage.getItem('databaseDownloadDate');
@@ -46,14 +46,14 @@ export default class App extends Component {
         } catch (error) {
         }
 
-        this._selectDataFromTable()
+        // this._selectDataFromTable()
 
     }
 
 
     _selectDataFromTable(){
         db.transaction((tx) => {
-            tx.executeSql('SELECT * FROM main.descriptionTest',[], (tx, results) => {
+            tx.executeSql('SELECT * FROM main.tests',[], (tx, results) => {
                 var len = results.rows.length;
                 console.log("dlugosc: ", len);
                 console.log(results.rows.item(0));
@@ -66,6 +66,8 @@ export default class App extends Component {
             });
         });
     }
+
+
 
     insertData = () => {
         db.transaction((tx) => {
@@ -84,6 +86,7 @@ export default class App extends Component {
                 });
         })
     };
+
 
     addTestsToDatabase = (db, data) => {
         db.transaction((tx) => {
@@ -105,7 +108,7 @@ export default class App extends Component {
                 .then((d) => {
                     db.transaction((tx) => {
                         tx.executeSql(
-                            'INSERT INTO descriptionTest (id, name, description, level, tasks, tags) VALUES (?, ?, ?, ?, ?, ?);',
+                            'INSERT INTO tests (id, name, description, level, tasks, tags) VALUES (?, ?, ?, ?, ?, ?);',
                             [d.id, d.name, d.description, JSON.stringify(d.level), JSON.stringify(d.tasks), JSON.stringify(d.tags)]
                         );
                     });
@@ -139,6 +142,17 @@ export default class App extends Component {
         });
     };
 
+    newWindow2 = (window, id) => {
+        Navigation.push(this.props.componentId, {
+            component: {
+                name: window,
+                passProps: {
+                    text: id
+                },
+            }
+        });
+    };
+
 
     goToDrawer = () => {
         Navigation.mergeOptions('drawerId', {
@@ -165,10 +179,10 @@ export default class App extends Component {
             rows.push(
                 <View key={i} style={styles.view}>
                     <TouchableOpacity style={styles.testButton} key={i}
-                                      onPress={() => this.newWindow('Tests', this.state.tests[i].id)}>
+                                      onPress={() => this.newWindow2('Tests', this.state.tests[i].id)}>
                         <Text style={styles.titleTest}>{this.state.tests[i].name}</Text>
                         <Text style={styles.tagsTest}>
-                            #{this.state.tests[i].tags}
+                            {_.map(JSON.parse(this.state.tests[i].tags), x => ('#' + x + ' '))}
                         </Text>
                         <Text style={styles.descriptionTest}>
                             {this.state.tests[i].description}

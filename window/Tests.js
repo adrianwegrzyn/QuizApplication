@@ -3,7 +3,9 @@ import {ListView, TouchableOpacity, Button, Platform, StyleSheet, Text, View, As
 import { Question} from "./Question";
 import {Navigation} from "react-native-navigation";
 import Icon from "react-native-vector-icons/FontAwesome";
+import SQLite from 'react-native-sqlite-storage'
 
+var db = SQLite.openDatabase({name: 'database.db', createFromLocation: '~www/database.db'});
 
 export default class Tests extends Component{
 
@@ -12,12 +14,49 @@ export default class Tests extends Component{
         super();
         this.state = {
             refreshing: false,
+            tests: []
         };
 
         this.currentQuestion = 0;
         this.testLength = 3;
         this.score = 0;
     }
+
+    componentDidMount() {
+        this._selectDataFromTable();
+        this.downloadDataFromDatabase();
+    }
+
+
+    _selectDataFromTable(){
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM main.tests',[], (tx, results) => {
+                var len = results.rows.length;
+                console.log("dlugosc: ", len);
+                console.log(results.rows.item(0));
+                console.log(results.rows.item(1));
+                console.log(results.rows.item(2));
+                console.log(results.rows.item(3));
+                console.log(results.rows.item(4));
+                console.log(results.rows.item(5));
+
+
+            });
+        });
+    }
+
+
+    downloadDataFromDatabase = (db) => {
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM main.descriptionTest;', [], (tx, results) => {
+                var tests = [];
+                for(let i = 0; i < results.rows.length; i++) {
+                    tests[i] = results.rows.item(i);
+                }
+                this.setState({ tests: tests });
+            });
+        });
+    };
 
     _onRefresh = () => {
         this.setState({refreshing: true});
