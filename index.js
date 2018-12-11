@@ -6,7 +6,7 @@ import Drawer from './window/Drawer';
 import ResultTest from './window/ResultTest';
 import { Dimensions, React } from 'react-native'
 
-var SQLite = require('react-native-sqlite-storage')
+
 
 Navigation.registerComponent('App', () => App);
 Navigation.registerComponent('Results', () => Results);

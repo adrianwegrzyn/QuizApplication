@@ -1,9 +1,22 @@
 import React, {Component} from 'react';
 import { ScrollView, Image, Platform, AppRegistry, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Navigation } from 'react-native-navigation';
-
+import SQLite from "react-native-sqlite-storage";
+var db = SQLite.openDatabase({name: 'database.db', createFromLocation: '~www/database.db'});
 
 export default class Drawer extends Component{
+    constructor() {
+        super();
+        this.state = {
+            tests: [],
+        }
+
+    }
+
+    componentDidMount() {
+        this.downloadDataFromDatabase(db);
+    }
+
     newScreen = (screen) => {
         Navigation.mergeOptions('drawerId', {
             sideMenu: {
@@ -19,7 +32,31 @@ export default class Drawer extends Component{
         })
     };
 
+    downloadDataFromDatabase = (db) => {
+        db.transaction((tx) => {
+            tx.executeSql('SELECT * FROM main.descriptionTest;', [], (tx, results) => {
+                var tests = [];
+                for(let i = 0; i < results.rows.length; i++) {
+                    tests[i] = results.rows.item(i);
+                }
+                this.setState({ tests: tests });
+            });
+        });
+    };
+
   render() {
+
+      let rows = [];
+      for(let i = 0; i < this.state.tests.length; i++) {
+          rows.push(
+              <View key={i} style={styles.view}>
+                  <TouchableOpacity style={styles.button}  key={i} onPress={() => this.newScreen('Tests', this.state.tests[i].id)}>
+                      <Text style={styles.buttonText}>{this.state.tests[i].name}</Text>
+                  </TouchableOpacity>
+              </View>
+          )
+      }
+
     return (
       <ScrollView style={styles.container}>
           <View style={styles.imageTitle}>
@@ -36,14 +73,7 @@ export default class Drawer extends Component{
               </TouchableOpacity>
           </View>
 
-          <View syle={styles.tests}>
-              <TouchableOpacity style={styles.button}  onPress={() => this.newScreen('Tests')}>
-                  <Text style={styles.buttonText}>Test_1</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.button}  onPress={() => this.newScreen('Tests')}>
-                  <Text style={styles.buttonText}>Test_2</Text>
-              </TouchableOpacity>
-          </View>
+          {rows}
       </ScrollView>
     );
   }
