@@ -51,23 +51,6 @@ export default class Results extends Component{
                 .then((response) => response.json())
                 .then((responseJson) => {
                     var standardDataSource = new ListView.DataSource({rowHasChanged: (r1,r2) => r1 !== r2});
-                    // var results = [
-                    //     {
-                    //         nick: 'Marek',
-                    //         score: 18,
-                    //         total: 20,
-                    //         type: 'historia',
-                    //         date: '2018-11-22'
-                    //     },
-                    //     {
-                    //         nick: 'Marcin',
-                    //         score: 19,
-                    //         total: 20,
-                    //         type: 'kultura',
-                    //         date: '2018-11-24'
-                    //     }
-                    // ];
-                    // this.state.cloneMovies = standardDataSource.cloneWithRows(responseJson.results);
                     this.setState({
                         isLoading: false,
                         clonedResults: standardDataSource.cloneWithRows(responseJson)

@@ -19,11 +19,6 @@ export default class Tests extends Component{
         this.score = 0;
     }
 
-
-    saveData = () => {
-        let score = this.score;
-        AsyncStorage.setItem('score', score);
-};
     _onRefresh = () => {
         this.setState({refreshing: true});
         // this.fetchData().then(() => {
@@ -38,7 +33,6 @@ export default class Tests extends Component{
     next = () => {
         if(this.testLength === this.currentQuestion){
             this.sendResult();
-            this.saveData();
             Navigation.push('MAIN_STACK',{
 
                 component: {
