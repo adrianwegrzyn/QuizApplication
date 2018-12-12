@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { ScrollView, Image, Platform, AppRegistry, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { Navigation } from 'react-native-navigation';
+import {ScrollView, Image, Platform, AppRegistry, StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import {Navigation} from 'react-native-navigation';
 import SQLite from "react-native-sqlite-storage";
+
 var db = SQLite.openDatabase({name: 'database.db', createFromLocation: '~www/database.db'});
 
-export default class Drawer extends Component{
+export default class Drawer extends Component {
     constructor() {
         super();
         this.state = {
@@ -25,7 +26,7 @@ export default class Drawer extends Component{
                 }
             }
         });
-        Navigation.push('MAIN_STACK',{
+        Navigation.push('MAIN_STACK', {
             component: {
                 name: screen
             }
@@ -40,7 +41,7 @@ export default class Drawer extends Component{
                 }
             }
         });
-        Navigation.push('MAIN_STACK',{
+        Navigation.push('MAIN_STACK', {
             component: {
                 name: screen,
                 passProps: {
@@ -55,65 +56,67 @@ export default class Drawer extends Component{
         db.transaction((tx) => {
             tx.executeSql('SELECT * FROM main.descriptionTest;', [], (tx, results) => {
                 var tests = [];
-                for(let i = 0; i < results.rows.length; i++) {
+                for (let i = 0; i < results.rows.length; i++) {
                     tests[i] = results.rows.item(i);
                 }
-                this.setState({ tests: tests });
+                this.setState({tests: tests});
             });
         });
     };
 
-  render() {
+    render() {
 
-      let rows = [];
-      for(let i = 0; i < this.state.tests.length; i++) {
-          rows.push(
-              <View key={i} style={styles.view}>
-                  <TouchableOpacity style={styles.button}  key={i} onPress={() => this.newScreen2('Tests', this.state.tests[i].id, this.state.tests[i].name)}>
-                      <Text style={styles.buttonText}>{this.state.tests[i].name}</Text>
-                  </TouchableOpacity>
-              </View>
-          )
-      }
+        let rows = [];
+        for (let i = 0; i < this.state.tests.length; i++) {
+            rows.push(
+                <View key={i} style={styles.view}>
+                    <TouchableOpacity style={styles.button} key={i}
+                                      onPress={() => this.newScreen2('Tests', this.state.tests[i].id, this.state.tests[i].name)}>
+                        <Text style={styles.buttonText}>{this.state.tests[i].name}</Text>
+                    </TouchableOpacity>
+                </View>
+            )
+        }
 
-    return (
-      <ScrollView style={styles.container}>
-          <View style={styles.imageTitle}>
-              <Image style={styles.image} source={{uri: 'https://cdn.pixabay.com/photo/2017/02/11/22/38/quiz-2058883_960_720.png'}}/>
-          </View>
+        return (
+            <ScrollView style={styles.container}>
+                <View style={styles.imageTitle}>
+                    <Image style={styles.image}
+                           source={{uri: 'https://cdn.pixabay.com/photo/2017/02/11/22/38/quiz-2058883_960_720.png'}}/>
+                </View>
 
-          <View syle={styles.navigationApp}>
+                <View syle={styles.navigationApp}>
 
-              <TouchableOpacity style={styles.buttonNavigation}  onPress={() => this.newScreen('App')}>
-                  <Text style={styles.buttonText}>Strona głowna</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonNavigation} onPress={() => this.newScreen('Results')}>
-                  <Text style={styles.buttonText}>Wyniki</Text>
-              </TouchableOpacity>
-          </View>
+                    <TouchableOpacity style={styles.buttonNavigation} onPress={() => this.newScreen('App')}>
+                        <Text style={styles.buttonText}>Strona głowna</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.buttonNavigation} onPress={() => this.newScreen('Results')}>
+                        <Text style={styles.buttonText}>Wyniki</Text>
+                    </TouchableOpacity>
+                </View>
 
-          {rows}
-      </ScrollView>
-    );
-  }
+                {rows}
+            </ScrollView>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E2E2E2',
-      flexDirection: 'column'
+    container: {
+        flex: 1,
+        backgroundColor: '#E2E2E2',
+        flexDirection: 'column'
 
-  },
-  welcome: {
-    fontSize: 40,
-    textAlign: 'center',
-    margin: 10,
-      marginBottom: 20,
-      color: 'black'
-  },
+    },
+    welcome: {
+        fontSize: 40,
+        textAlign: 'center',
+        margin: 10,
+        marginBottom: 20,
+        color: 'black'
+    },
     button: {
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         alignSelf: 'stretch',
         justifyContent: 'center',
@@ -122,11 +125,11 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 10,
         backgroundColor: '#ffffff',
-        borderRadius:5
+        borderRadius: 5
 
     },
     buttonNavigation: {
-        flex:1,
+        flex: 1,
         alignItems: 'center',
         alignSelf: 'stretch',
         justifyContent: 'center',
@@ -135,7 +138,7 @@ const styles = StyleSheet.create({
         padding: 5,
         margin: 10,
         backgroundColor: '#A399A7',
-        borderRadius:5
+        borderRadius: 5
 
     },
     buttonText: {
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 3,
 
     },
-    tests:{
+    tests: {
         alignItems: 'center',
     },
     image: {
@@ -159,8 +162,8 @@ const styles = StyleSheet.create({
         height: 100,
     },
     imageTitle: {
-      marginTop: 10,
-      alignItems: 'center',
+        marginTop: 10,
+        alignItems: 'center',
         borderBottomColor: 'black',
         borderBottomWidth: 3,
 

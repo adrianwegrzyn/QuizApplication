@@ -1,6 +1,15 @@
 import React, {Component} from 'react';
 import _ from 'lodash';
-import {StyleSheet, Text, View, ScrollView, TouchableOpacity, AsyncStorage, ListView, ActivityIndicator} from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    View,
+    ScrollView,
+    TouchableOpacity,
+    AsyncStorage,
+    ListView,
+    ActivityIndicator
+} from 'react-native';
 import {Navigation} from 'react-native-navigation';
 import SplashScreen from 'react-native-splash-screen';
 import Regulations from './window/Regulations'
@@ -21,8 +30,6 @@ export default class App extends Component {
             tests: []
         };
     }
-
-
 
 
     async componentDidMount() {
@@ -66,7 +73,6 @@ export default class App extends Component {
     //         });
     //     });
     // }
-
 
 
     insertData = () => {
@@ -126,10 +132,10 @@ export default class App extends Component {
         db.transaction((tx) => {
             tx.executeSql('SELECT * FROM main.descriptionTest;', [], (tx, results) => {
                 var tests = [];
-                for(let i = 0; i < results.rows.length; i++) {
+                for (let i = 0; i < results.rows.length; i++) {
                     tests[i] = results.rows.item(i);
                 }
-                this.setState({ tests: tests });
+                this.setState({tests: tests});
 
             });
         });
