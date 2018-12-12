@@ -112,6 +112,7 @@ export default class App extends Component {
                             [d.id, d.name, d.description, JSON.stringify(d.level), JSON.stringify(d.tasks), JSON.stringify(d.tags)]
                         );
                     });
+
                     AsyncStorage.setItem('databaseDownloadDate', JSON.stringify({"value": Date()}));
                 })
                 .catch((error) => {
@@ -129,6 +130,7 @@ export default class App extends Component {
                     tests[i] = results.rows.item(i);
                 }
                 this.setState({ tests: tests });
+
             });
         });
     };
@@ -142,12 +144,13 @@ export default class App extends Component {
         });
     };
 
-    newWindow2 = (window, id) => {
+    newWindow2 = (window, id, name) => {
         Navigation.push(this.props.componentId, {
             component: {
                 name: window,
                 passProps: {
-                    id: id
+                    id: id,
+                    nameTestProps: name,
                 },
             }
         });
@@ -179,7 +182,7 @@ export default class App extends Component {
             rows.push(
                 <View key={i} style={styles.view}>
                     <TouchableOpacity style={styles.testButton} key={i}
-                                      onPress={() => this.newWindow2('Tests', this.state.tests[i].id)}>
+                                      onPress={() => this.newWindow2('Tests', this.state.tests[i].id, this.state.tests[i].name)}>
                         <Text style={styles.titleTest}>{this.state.tests[i].name}</Text>
                         <Text style={styles.tagsTest}>
                             {_.map(JSON.parse(this.state.tests[i].tags), x => ('#' + x + ' '))}
@@ -252,11 +255,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderColor: '#71BBD0',
-        borderWidth: 1,
+        borderColor: '#000000',
+        borderWidth: 2,
         padding: 5,
         margin: 10,
-        backgroundColor: '#71BBD0',
+        backgroundColor: '#FFFFFF',
         borderRadius: 5,
     },
     checkButton: {
@@ -264,11 +267,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderColor: '#71BBD0',
+        borderColor: '#A6C7FF',
         borderWidth: 1,
         padding: 5,
         margin: 10,
-        backgroundColor: '#71BBD0',
+        backgroundColor: '#A6C7FF',
         borderRadius: 5,
     },
     check: {
@@ -276,7 +279,8 @@ const styles = StyleSheet.create({
         borderColor: '#000000',
         borderWidth: 1,
         margin: 10,
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF'
     },
     checkText: {
         padding: 5,

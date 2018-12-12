@@ -73,7 +73,7 @@ export default class Results extends Component{
         <View style={styles.container}>
             <View style={styles.toolbar}>
                 <Icon.Button style={{flex:1, margin: 5}} name="bars" backgroundColor="#46597a" color="black" size={30} onPress={this.goToDrawer}/>
-                <Text style={{flex:1, marginLeft: 50, fontSize:25}}>Wyniki </Text>
+                <Text style={{flex:1, marginLeft: 50, fontSize:25}}>Wyniki</Text>
             </View>
               <ScrollView
                           refreshControl={
@@ -111,8 +111,8 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-    head: { height: 40, backgroundColor: '#534535' },
-    text: { margin: 6 },
+    head: { height: 40, backgroundColor: '#71BBD0' },
+    text: { margin: 6, textAlign: 'center' },
     toolbar: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -120,5 +120,5 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 60,
     },
-    textColumnName: { margin: 6, backgroundColor: '#534535' },
+    textColumnName: { margin: 6, textAlign: 'center' },
 });

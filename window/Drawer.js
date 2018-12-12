@@ -32,7 +32,7 @@ export default class Drawer extends Component{
         })
     };
 
-    newScreen2 = (screen, id) => {
+    newScreen2 = (screen, id, name) => {
         Navigation.mergeOptions('drawerId', {
             sideMenu: {
                 left: {
@@ -44,7 +44,8 @@ export default class Drawer extends Component{
             component: {
                 name: screen,
                 passProps: {
-                    id: id
+                    id: id,
+                    nameTestProps: name,
                 },
             }
         })
@@ -68,7 +69,7 @@ export default class Drawer extends Component{
       for(let i = 0; i < this.state.tests.length; i++) {
           rows.push(
               <View key={i} style={styles.view}>
-                  <TouchableOpacity style={styles.button}  key={i} onPress={() => this.newScreen2('Tests', this.state.tests[i].id)}>
+                  <TouchableOpacity style={styles.button}  key={i} onPress={() => this.newScreen2('Tests', this.state.tests[i].id, this.state.tests[i].name)}>
                       <Text style={styles.buttonText}>{this.state.tests[i].name}</Text>
                   </TouchableOpacity>
               </View>
@@ -78,15 +79,15 @@ export default class Drawer extends Component{
     return (
       <ScrollView style={styles.container}>
           <View style={styles.imageTitle}>
-              <Text style={styles.welcome}>Quiz App</Text>
-              <Image style={styles.image} source={{uri: 'https://facebook.github.io/react-native/docs/assets/favicon.png'}}/>
+              <Image style={styles.image} source={{uri: 'https://cdn.pixabay.com/photo/2017/02/11/22/38/quiz-2058883_960_720.png'}}/>
           </View>
 
           <View syle={styles.navigationApp}>
-              <TouchableOpacity style={styles.button}  onPress={() => this.newScreen('App')}>
+
+              <TouchableOpacity style={styles.buttonNavigation}  onPress={() => this.newScreen('App')}>
                   <Text style={styles.buttonText}>Strona głowna</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => this.newScreen('Results')}>
+              <TouchableOpacity style={styles.buttonNavigation} onPress={() => this.newScreen('Results')}>
                   <Text style={styles.buttonText}>Wyniki</Text>
               </TouchableOpacity>
           </View>
@@ -109,39 +110,60 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
       marginBottom: 20,
+      color: 'black'
   },
     button: {
         flex:1,
         alignItems: 'center',
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderColor: '#71BBD0',
+        borderColor: '#000000',
         borderWidth: 1,
         padding: 5,
         margin: 10,
-        backgroundColor: '#71BBD0',
+        backgroundColor: '#ffffff',
+        borderRadius:5
+
+    },
+    buttonNavigation: {
+        flex:1,
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        justifyContent: 'center',
+        borderColor: '#000000',
+        borderWidth: 1,
+        padding: 5,
+        margin: 10,
+        backgroundColor: '#A399A7',
         borderRadius:5
 
     },
     buttonText: {
-        fontSize: 25,
+        fontSize: 20,
         color: 'black',
         fontFamily: 'OpenSans-Regular',
+        textAlign: 'center'
     },
     navigationApp: {
-        flexDirection: 'row',
-        flex: 1,
-        justifyContent: 'space-around',
+
         alignItems: 'center',
+        borderBottomColor: 'black',
+        borderBottomWidth: 3,
+
     },
     tests:{
         alignItems: 'center',
     },
     image: {
-        width: 100,
+        width: 200,
         height: 100,
     },
     imageTitle: {
+      marginTop: 10,
       alignItems: 'center',
+        borderBottomColor: 'black',
+        borderBottomWidth: 3,
+
+
     }
 });

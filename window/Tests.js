@@ -76,7 +76,10 @@ export default class Tests extends Component{
                 component: {
                     name: 'ResultTest',
                     passProps: {
-                        text: this.score
+                        scoreTestProps: this.score,
+                        testLengthProps: this.testLength,
+                        nameTestProps: this.props.nameTestProps,
+
                     },
                 }
             })
@@ -126,14 +129,15 @@ export default class Tests extends Component{
       <View style={styles.container}>
           <View style={styles.toolbar}>
               <Icon.Button style={{flex:1, margin: 5}} name="bars" backgroundColor="#46597a" color="black" size={30} onPress={this.goToDrawer}/>
-              <Text style={{flex:1, marginLeft: 50, fontSize:25}}>Test</Text>
+              <Text style={{flex:1, marginLeft: 40, fontSize:20}}>{this.props.nameTestProps}</Text>
           </View>
-          <View style={{alignItems: 'center', textAlign: 'center', padding: 10, flex:1}}>
-              <Text style={{alignItems: 'center'}}>Pytanie {this.currentQuestion + 1} z {this.testLength}</Text>
-              <Text style={{alignItems: 'center'}}>Aktualna ilość punktów: {this.score}</Text>
-              <Text style={{color:'black', fontSize: 20,}}>{this.state.tests[this.currentQuestion].question}</Text>
+          <View style={{alignItems: 'center', textAlign: 'center', padding: 10, flex:1, }}>
+              <View style={styles.question}>
+                  <Text style={{alignItems: 'center'}}>Pytanie {this.currentQuestion + 1} z {this.testLength}</Text>
+                  <Text style={{color:'black', fontSize: 16, padding: 10}}>{this.state.tests[this.currentQuestion].question}</Text>
+              </View>
           </View>
-          <View style={styles.questions}>
+          <View style={styles.answer}>
               {rowsAnswers}
           </View>
       </View>
@@ -157,23 +161,32 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         height: 60,
     },
-    questions: {
+    answer: {
         margin: 10,
         borderColor: 'black',
-        borderWidth: 3,
+        borderWidth: 1,
         alignItems: 'center',
-        flex:2
+        flex:2,
+
+    },
+    question: {
+        borderColor: 'black',
+        borderWidth: 1,
+        alignItems: 'center',
+        flex:2,
+        borderRadius:5,
+        width:340
     },
     button: {
         flex:1,
         alignItems: 'center',
         alignSelf: 'stretch',
         justifyContent: 'center',
-        borderColor: '#71BBD0',
+        borderColor: '#000000',
         borderWidth: 1,
         padding: 30,
         margin: 10,
-        backgroundColor: '#71BBD0',
+        backgroundColor: '#A6C7FF',
         borderRadius:5
 
     },
