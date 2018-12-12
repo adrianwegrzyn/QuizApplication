@@ -51,21 +51,21 @@ export default class App extends Component {
     }
 
 
-    _selectDataFromTable(){
-        db.transaction((tx) => {
-            tx.executeSql('SELECT * FROM main.tests',[], (tx, results) => {
-                var len = results.rows.length;
-                console.log("dlugosc: ", len);
-                console.log(results.rows.item(0));
-                console.log(results.rows.item(1));
-                console.log(results.rows.item(2));
-                console.log(results.rows.item(3));
-                console.log(results.rows.item(4));
-
-
-            });
-        });
-    }
+    // _selectDataFromTable(){
+    //     db.transaction((tx) => {
+    //         tx.executeSql('SELECT * FROM main.tests',[], (tx, results) => {
+    //             var len = results.rows.length;
+    //             console.log("dlugosc: ", len);
+    //             console.log(results.rows.item(0));
+    //             console.log(results.rows.item(1));
+    //             console.log(results.rows.item(2));
+    //             console.log(results.rows.item(3));
+    //             console.log(results.rows.item(4));
+    //
+    //
+    //         });
+    //     });
+    // }
 
 
 
@@ -90,7 +90,7 @@ export default class App extends Component {
 
     addTestsToDatabase = (db, data) => {
         db.transaction((tx) => {
-            tx.executeSql('DELETE FROM descriptionTest; DELETE FROM test; VACUUM;', [], (tx, results) => {
+            tx.executeSql('DELETE FROM descriptionTest; DELETE FROM tests; VACUUM;', [], (tx, results) => {
             });
             for (let i = 0; i < data.length; i++) {
                 tx.executeSql(
@@ -147,7 +147,7 @@ export default class App extends Component {
             component: {
                 name: window,
                 passProps: {
-                    text: id
+                    id: id
                 },
             }
         });

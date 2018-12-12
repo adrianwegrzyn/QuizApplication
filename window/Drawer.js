@@ -44,7 +44,7 @@ export default class Drawer extends Component{
             component: {
                 name: screen,
                 passProps: {
-                    text: id
+                    id: id
                 },
             }
         })

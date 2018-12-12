@@ -66,8 +66,10 @@ export default class Regulations extends Component {
           }
         });
         AsyncStorage.setItem(this.props.pagekey, JSON.stringify({"value":"true"}), (err,result) => {
-                console.log("error",err,"result",result);
-                });
+            if( err != null ) { //jest błąd
+                console.log("error", err, "result", result);
+            }
+        });
       }
       setModalVisible(visible) {
         this.setState({ modalVisible: visible });

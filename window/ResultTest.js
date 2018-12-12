@@ -4,6 +4,8 @@ import {Button, Platform, StyleSheet, Text, View, AsyncStorage} from 'react-nati
 export default class ResultTest extends Component{
 
 
+
+
     render() {
         return (
             <View style={styles.container}>
