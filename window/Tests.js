@@ -83,9 +83,10 @@ export default class Tests extends Component {
                 }
             })
         } else {
+            clearTimeout();
             setTimeout(() => {
                 this.next(false);
-            }, this.state.tests[this.currentQuestion].duration * 1000);
+            }, this.state.tests[this.currentQuestion].duration * 100);
             if (isCorrect) {
                 this.score++;
             }

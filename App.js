@@ -191,7 +191,7 @@ export default class App extends Component {
                                       onPress={() => this.newWindow2('Tests', this.state.tests[i].id, this.state.tests[i].name)}>
                         <Text style={styles.titleTest}>{this.state.tests[i].name}</Text>
                         <Text style={styles.tagsTest}>
-                            {_.map(JSON.parse(this.state.tests[i].tags), x => ('#' + x + ' '))}
+                            {/*{_.map(JSON.parse(this.state.tests[i].tags), x => ('#' + x + ' '))}*/}
                         </Text>
                         <Text style={styles.descriptionTest}>
                             {this.state.tests[i].description}
